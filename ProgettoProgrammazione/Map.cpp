@@ -2,50 +2,47 @@
 
 Map::Map()
 {
-	backImage = new sf::Texture();
-	backImage->loadFromFile("C:/Immagine.png");
-	background = *(new sf::RectangleShape(sf::Vector2f(800, 600)));
-	background.setTexture(backImage);
+	std::ifstream ifs("MAP.txt"); //This open the file
+	//Check if file is open correctly
+	if (!ifs.is_open())
+	{
+		std::cout << "Errore neel'aprire file mappa";
+	}
+	char ch;
+	std::string line;
 
-	//Ground
-	platforms.insert({ 0, sf::RectangleShape(sf::Vector2f(800, 50)) });
-	platforms.at(0).setFillColor(sf::Color::Green);
-	platforms.at(0).setPosition(0.f, 550.f);
-
-	//Suspended platforms
-	platforms.insert({ 1, sf::RectangleShape(sf::Vector2f(150, 25)) });
-	platforms.at(1).setFillColor(sf::Color::Yellow);
-	platforms.at(1).setPosition(100.f, 425.f);
-
-	platforms.insert({ 2, sf::RectangleShape(sf::Vector2f(150, 25)) });
-	platforms.at(2).setFillColor(sf::Color::Yellow);
-	platforms.at(2).setPosition(550.f, 425.f);
-
-	platforms.insert({ 3, sf::RectangleShape(sf::Vector2f(200, 25)) });
-	platforms.at(3).setFillColor(sf::Color::Yellow);
-	platforms.at(3).setPosition(300.f, 325.f);
-
-	platforms.insert({ 4, sf::RectangleShape(sf::Vector2f(125, 25)) });
-	platforms.at(4).setFillColor(sf::Color::Yellow);
-	platforms.at(4).setPosition(0.f, 275.f);
-
-	platforms.insert({ 5, sf::RectangleShape(sf::Vector2f(125, 25)) });
-	platforms.at(5).setFillColor(sf::Color::Yellow);
-	platforms.at(5).setPosition(675.f, 275.f);
-
-	platforms.insert({ 6, sf::RectangleShape(sf::Vector2f(100, 25)) });
-	platforms.at(6).setFillColor(sf::Color::Yellow);
-	platforms.at(6).setPosition(350.f, 75.f);
-
-	//Moving platforms
-	platforms.insert({ 7, sf::RectangleShape(sf::Vector2f(100, 25)) }); //Moving on X
-	platforms.at(7).setFillColor(sf::Color::Magenta);
-	platforms.at(7).setPosition(525.f, 200.f);
-
-	platforms.insert({ 8, sf::RectangleShape(sf::Vector2f(100, 25)) });	//Moving on Y
-	platforms.at(8).setFillColor(sf::Color::Magenta);
-	platforms.at(8).setPosition(200.f, 150.f);
-
+	while (!ifs.eof()) //eof return true if the end of the file is reached
+	{
+		ifs.get(ch);
+		if (ch = '#')	//Recognise start of obj properties
+		{
+			ifs.get(ch);
+			switch (ch)	//Recognise type of obj
+			{
+			case '0':
+				std::getline(ifs, line);
+				loadBackground(line);
+				break;
+			case '1':
+				ifs >> std::ws;
+				std::getline(ifs, line);
+				generatePlatform(line);
+				break;
+			case '2':
+				ifs >> std::ws;
+				std::getline(ifs, line);
+				generateMovingPlatform(line);
+				break;
+			case '3':
+				ifs >> std::ws;
+				std::getline(ifs, line);
+				generateDestroyable(line);
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 void Map::draw(sf::RenderWindow& window)
@@ -53,29 +50,83 @@ void Map::draw(sf::RenderWindow& window)
 	window.draw(background);
 	for (unsigned int i = 0; i < platforms.size(); i++)
 	{
-		window.draw(platforms.at(i));
+		window.draw(platforms.at(i).getBody());
+	}
+	for ( unsigned int i = 0; i < movingPlatforms.size(); i++)
+	{
+		window.draw(movingPlatforms.at(i).getBody());
 	}
 }
 
 void Map::update(float elapsedTime)
-{
-	if (platforms.at(7).getPosition().x <= 425)
+{	for (unsigned int i = 0; i < movingPlatforms.size(); i++)
 	{
-		dirX = 1;
+		if (movingPlatforms.at(i).isMoving()) {
+			movingPlatforms.at(i).move(elapsedTime);
+		}
 	}
-	else if (platforms.at(7).getPosition().x >= 525)
-	{
-		dirX = -1;
-	}
-	platforms.at(7).move(dirX * elapsedTime * 50, 0.f);
+}
 
-	if (platforms.at(8).getPosition().y >= 250)
+void Map::loadBackground(std::string line)
+{
+	backImage = new sf::Texture();
+	backImage->loadFromFile(line);
+	background = *(new sf::RectangleShape(sf::Vector2f(800, 600)));
+	background.setTexture(backImage);
+}
+
+void Map::generatePlatform(std::string line)
+{
+	std::string tmp;
+
+	float values[4]; //This function only because I aready now how many number there will be on that line
+	//Search "|" that indicate that what follows is a number
+	for (unsigned int i = 0; i < 4; i++)
 	{
-		dirY = -1;
+		size_t pos = line.find("|");
+		line = line.substr(pos + 1); //Subtract from line the pointer
+		pos = line.find("|");
+		tmp = line.substr(0, pos);	//Copy only the number in tmp
+		line = line.substr(pos);	//Eliminate from line the nmber maintaining the next pointer to number
+		values[i] = stof(tmp);	//Convert the number to float
 	}
-	else if (platforms.at(8).getPosition().y <= 150)
+	this->platforms.insert({ platforms.size(), Platform::Platform(values[0], values[1], values[2], values[3]) });
+}
+
+void Map::generateMovingPlatform(std::string line)
+{
+	std::string tmp;
+
+	float values[7]; //This function only because I aready now how many number there will be on that line
+
+	//Search "|" that indicate that what follows is a number
+	for (unsigned int i = 0; i < 7; i++)
 	{
-		dirY = 1;
+		size_t pos = line.find("|");
+		line = line.substr(pos + 1); //Subtract from line the pointer
+		pos = line.find("|");
+		tmp = line.substr(0, pos);	//Copy only the number in tmp
+		line = line.substr(pos);	//Eliminate from line the nmber maintaining the next pointer to number
+		values[i] = stof(tmp);	//Convert the number to float
 	}
-	platforms.at(8).move(0.f, dirY * elapsedTime * 50);
+	this->movingPlatforms.insert({ movingPlatforms.size(), MovingPlatform::MovingPlatform(values[0], values[1], values[4], values[5], values[2], values[3], true, values[6])});
+}
+
+void Map::generateDestroyable(std::string line)
+{
+	std::string tmp;
+
+	float values[6]; //This function only because I aready now how many number there will be on that line
+
+	//Search "|" that indicate that what follows is a number
+	for (unsigned int i = 0; i < 6; i++)
+	{
+		size_t pos = line.find("|");
+		line = line.substr(pos + 1); //Subtract from line the pointer
+		pos = line.find("|");
+		tmp = line.substr(0, pos);	//Copy only the number in tmp
+		line = line.substr(pos);	//Eliminate from line the nmber maintaining the next pointer to number
+		values[i] = stof(tmp);	//Convert the number to float
+	}
+	this->platforms.insert({ platforms.size(), Destroyable::Destroyable(values[0], values[1], values[2], values[3], true, values[4], values[5]) });
 }

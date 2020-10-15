@@ -7,15 +7,15 @@
 
 class Drawable
 {
-private:
-	sf::Sprite sprite();
-	sf::Texture texture();
+//Attributes
+protected:
+	sf::RectangleShape* sprite;
+	sf::Texture texture;
+	unsigned int textureID;
 
-	//Private functions
+//Methods
+protected:
 	void initTexture();
 	void initSprite(float scale);
-
-public:
-	Drawable();
-	virtual ~Drawable();
+	void collide();
 };

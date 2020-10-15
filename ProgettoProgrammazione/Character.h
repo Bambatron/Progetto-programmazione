@@ -6,28 +6,23 @@
 
 class Character : public Drawable
 {
+//Attributes
+protected:
+	unsigned int hp;
+	bool facingRight; // 1=facing right, 0=facing left
+	float speed;
+
+	//Methods
 public:
 	Character();
-	virtual ~Character();
 
-	//Functions
-	void move(const float posX, const float posY);
-	
-	void setHp(int hp);
-	void setHpTot(int hp_tot);
-	void setSpeed(int speed);
-	void setJumpHeight(int jump_height);
-	void takeDamage();
+	void setHP(unsigned int hp) { this->hp = hp; }
+	void setFacing(bool direction) { this->facingRight = direction; }
+	void setSpeed(float speed) { this->speed = speed; }
 
-	int getHp();
-	int getHpTot();
-	float getSpeed();
-	float getJumpHeight();
+	unsigned int getHP() { return hp; }
+	bool getFacing() { return facingRight; }
+	float getSpeed() { return speed; }
 
-protected:
-	int hp;
-	int hp_tot;
-	int speed;
-	float movementSpeed;
-	float jump_height;
+	void move(float timeElapsed);
 };
