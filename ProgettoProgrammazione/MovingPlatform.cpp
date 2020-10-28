@@ -15,6 +15,8 @@ MovingPlatform::MovingPlatform(int originalPositionX, int originalPositionY, int
 
 void MovingPlatform::move(float elapsedTime)
 {
+	float oldPosX;
+	float oldPosY;
 	if (isNearX())
 		direction.x = 0;
 	if (isNearY())
@@ -27,6 +29,8 @@ void MovingPlatform::move(float elapsedTime)
 		originalPosition = tmp;
 		searchDirection();
 	}
+	oldPosX = body.getPosition().x;
+	oldPosY = body.getPosition().y;
 	body.move(elapsedTime*speed*direction.x, elapsedTime*speed*direction.y);
 }
 

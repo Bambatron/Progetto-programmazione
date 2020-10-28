@@ -1,0 +1,3 @@
+https://www.sfml-dev.org/tutorials/2.5/
+https://www.sfml-dev.org/documentation/2.5.1/index.php
+https://gamedevelopment.tutsplus.com/tutorials/basic-2d-platformer-physics-part-1--cms-25799

@@ -1,9 +1,15 @@
-﻿  Destroyable.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\destroyable.cpp(5): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  main.cpp
+﻿  main.cpp
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\main.cpp(102): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
   Generating code
-  52 of 558 functions ( 9.3%) were compiled, the rest were copied from previous compilation.
+  11 of 673 functions ( 1.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    50 functions had inline decision re-evaluated but remain unchanged
+    15 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   ProgettoProgrammazione.vcxproj -> C:\Users\Bamba\Documents\GitHub\Progetto-programmazione\Release\ProgettoProgrammazione.exe

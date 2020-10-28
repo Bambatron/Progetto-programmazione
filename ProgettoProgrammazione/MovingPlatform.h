@@ -24,7 +24,7 @@ public:
 	sf::Vector2f getFinalPos() { return finalPosition; }
 
 	void move(float elapsedTime);
-
+	 
 private:
 	void searchDirection();
 	bool isNearX();

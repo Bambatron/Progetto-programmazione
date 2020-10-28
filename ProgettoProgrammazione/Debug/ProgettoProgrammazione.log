@@ -1,0 +1,11 @@
+﻿  Character.cpp
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\character.cpp(93): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Player.cpp
+  PlayerProva.cpp
+  main.cpp
+  Generating Code...
+  ProgettoProgrammazione.vcxproj -> C:\Users\Bamba\Documents\GitHub\Progetto-programmazione\Debug\ProgettoProgrammazione.exe

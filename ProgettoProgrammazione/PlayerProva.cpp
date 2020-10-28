@@ -1,31 +1,36 @@
 #include "PlayerProva.h"
 
-PlayerProva::PlayerProva()
+PlayerProva::PlayerProva() 
 {
-	sprite.setSize(sf::Vector2f(25.f, 50.f));
+	//Drawable stuff
+	sprite.setSize(sf::Vector2f(12.f, 40.f));
+	sprite.setPosition(sf::Vector2f(100.f, 500.f));
 	sprite.setFillColor(sf::Color::Red);
-	speed = 200;
+	//Moving Object
+	pos = sf::Vector2f(100.f, 500.f);
+	collisionBox.center = sf::Vector2f(100 + 6, 500 + 20);
+	collisionBox.halfsize = sf::Vector2f(6, 20);
+	this->currentState = CharacterState::standing;
+	
+	this->_onGround = true;
+	this->_wasOnGround = true;
+	this->_pushLWall = false;
+	this->_pushedLWall = false;
+	this->_pushRWall = false;
+	this->_pushedRWall = false;
+	this->_atCeiling = false;
+	this->_wasAtCeiling = false;
+
+	//Character
+	hp = 100;
+	facingRight = true;
+	wSpeed = 60;
+	jSpeed = -160;
 }
 
-sf::Drawable & PlayerProva::getPlayerSprite()
+void PlayerProva::move(float elapsedTime)
 {
-	return this->sprite;
-}
-
-void PlayerProva::setPos(float x, float y)
-{
-	this->sprite.setPosition(sf::Vector2f(x, y));
-}
-
-void PlayerProva::move(float direction, float elapsedTime)
-{
-	this->sprite.move(direction*speed*elapsedTime, 0.f);
-}
-
-void PlayerProva::jump(float t1, float t2)
-{
-	float g = 9.81;
-	float v0 = 55;
-	float offset = g*(t2 - t1)*(t2 - t1)/2 - v0*(t2-t1);
-	sprite.move(sf::Vector2f(0.f, offset));
+	std::cout << "PlayerProva::move()\n";
+	MovingObject::move(speed*elapsedTime);
+	sprite.move(sf::Vector2f(speed.x*elapsedTime, speed.y*elapsedTime));
 }
