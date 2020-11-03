@@ -52,6 +52,10 @@ public:
 	TileType getTile(int x, int y);
 	bool isObstacle(int x, int y);
 	bool isGround(int x, int y);
+	bool isCeiling(int x, int y);
+	bool hasLeftWall(sf::Vector2f leftUp, sf::Vector2f leftDown, float* wallX);
+	bool hasRightWall(sf::Vector2f rightUp, sf::Vector2f rightDown, float* wallX);
+	bool hasCeiling(sf::Vector2f upperLeft, sf::Vector2f upperRight, float* ceilingY);
 	bool hasGround(sf::Vector2f bottomLeft, sf::Vector2f bottomRight, float* groundY);
 	bool isOneWay(int x, int y);
 	bool isEmpty(int x, int y);

@@ -59,6 +59,7 @@ public:
 	sf::Vector2f getOldPos() { return this->oldPos; }
 	sf::Vector2f getSpeed() { return this->speed; }
 	sf::Vector2f getOldSpeed() { return this->oldSpeed; }
+	sf::Vector2f getAABBPos() { return sf::Vector2f(collisionBox.center.x - collisionBox.halfsize.x, collisionBox.center.y - collisionBox.halfsize.y); }
 	//Setters
 	void setPos(sf::Vector2f sPos) { this->pos = sPos; }
 	void setSpeed(sf::Vector2f sSpeed) { this->speed = sSpeed; }

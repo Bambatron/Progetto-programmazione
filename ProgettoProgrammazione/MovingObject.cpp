@@ -42,9 +42,54 @@ void MovingObject::updatePhysics(float elapsedTime, Map& map)
 	//Update old data
 	oldPos = pos;
 	oldSpeed = speed;
+	
+	//Chek left wall
 	_pushedLWall = _pushLWall;
+	sf::Vector2f leftUp(collisionBox.center.x - collisionBox.halfsize.x, collisionBox.center.y - collisionBox.halfsize.y);
+	sf::Vector2f leftdown(collisionBox.center.x - collisionBox.halfsize.x, collisionBox.center.y + collisionBox.halfsize.y);
+	float wallX = 0;
+	if (speed.x <= 0
+		&& map.hasLeftWall(leftUp, leftdown, &wallX))
+	{
+		pos.x = wallX;
+		collisionBox.center.x = wallX + collisionBox.halfsize.x;
+		speed.x = 0;
+		_pushLWall = true;
+	}
+	else
+		_pushLWall = false;
+
+	//Chek right wall
 	_pushedRWall = _pushRWall;
+	sf::Vector2f rightUp(collisionBox.center.x + collisionBox.halfsize.x, collisionBox.center.y - collisionBox.halfsize.y);
+	sf::Vector2f rightDown(collisionBox.center.x + collisionBox.halfsize.x, collisionBox.center.y + collisionBox.halfsize.y);
+	wallX = 0;
+	if (speed.x >= 0
+		&& map.hasRightWall(rightUp, rightDown, &wallX))
+	{
+		pos.x = wallX - 2 * collisionBox.halfsize.x;
+		collisionBox.center.x = wallX - collisionBox.halfsize.x;
+		speed.x = 0;
+		_pushRWall = true;
+	}
+	else
+		_pushRWall = false;
+
+	//Check ceiling
 	_wasAtCeiling = _atCeiling;
+	sf::Vector2f upperLeft(collisionBox.center.x - collisionBox.halfsize.x, collisionBox.center.y - collisionBox.halfsize.y);
+	sf::Vector2f upperRight(collisionBox.center.x + collisionBox.halfsize.x, collisionBox.center.y - collisionBox.halfsize.y);
+	float ceilingY = 0;
+	if (speed.y < 0
+		&& map.hasCeiling(upperLeft, upperRight, &ceilingY))
+	{
+		pos.y = ceilingY;
+		collisionBox.center.y = ceilingY + collisionBox.halfsize.y;
+		speed.y = 0.f;
+		_atCeiling = true;
+	}
+	else
+		_atCeiling = false;
 
 	//Check ground
 	_wasOnGround = _onGround;
@@ -56,7 +101,7 @@ void MovingObject::updatePhysics(float elapsedTime, Map& map)
 	{
 		pos.y = groundY - collisionBox.halfsize.y * 2;
 		collisionBox.center.y = groundY - collisionBox.halfsize.y;
-		speed.y = 0.0f;
+		speed.y = 0.f;
 		_onGround = true;
 	}
 	else

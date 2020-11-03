@@ -1,11 +1,31 @@
-﻿  Character.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\character.cpp(93): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
+﻿  Map.cpp
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
-              T=float
+              T=int
           ]
-  Player.cpp
-  PlayerProva.cpp
-  main.cpp
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(72): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(74): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(84): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(86): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(96): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(98): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(266): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(268): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(278): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(280): warning C4018: '<': signed/unsigned mismatch
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(327): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(346): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(365): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  MovingObject.cpp
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   ProgettoProgrammazione.vcxproj -> C:\Users\Bamba\Documents\GitHub\Progetto-programmazione\Debug\ProgettoProgrammazione.exe

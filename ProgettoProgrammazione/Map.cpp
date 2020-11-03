@@ -125,6 +125,81 @@ bool Map::isGround(int x, int y)
 		return ((tiles[x][y] == TileType::block)||(tiles[x][y] == TileType::oneway));
 }
 
+bool Map::isCeiling(int x, int y)
+{
+	if ((x <= 0) || (x >= WIDTH) || (y <= 0) || (y >= HEIGHT))
+		return false;
+	else
+		return (tiles[x][y] == TileType::block);
+}
+
+bool Map::hasLeftWall(sf::Vector2f leftUp, sf::Vector2f leftDown, float * wallX)
+{
+	sf::Vector2f checkedTile = leftUp;
+
+	int tileIndexX;
+	int tileIndexY;
+
+	while (checkedTile.y < leftDown.y)
+	{
+		checkedTile.y = fmin(checkedTile.y, leftDown.y);
+		tileIndexX = getTileIndexS(checkedTile.x);
+		tileIndexY = getTileIndexS(checkedTile.y);
+		if (this->isGround(tileIndexX, tileIndexY))
+		{
+			*wallX = getTilePosS(tileIndexX+1);
+			return true;
+		}
+		checkedTile.y += TILESIZE;
+	}
+	
+	return false;
+}
+
+bool Map::hasRightWall(sf::Vector2f rightUp, sf::Vector2f rightDown, float * wallX)
+{
+	sf::Vector2f checkedTile = rightUp;
+
+	int tileIndexX;
+	int tileIndexY;
+
+	while (checkedTile.y < rightDown.y)
+	{
+		checkedTile.y = fmin(checkedTile.y, rightDown.y);
+		tileIndexX = getTileIndexS(checkedTile.x);
+		tileIndexY = getTileIndexS(checkedTile.y);
+		if (this->isGround(tileIndexX, tileIndexY))
+		{
+			*wallX = getTilePosS(tileIndexX);
+			return true;
+		}
+		checkedTile.y += TILESIZE;
+	}return false;
+}
+
+bool Map::hasCeiling(sf::Vector2f upperLeft, sf::Vector2f upperRight, float * ceilingY)
+{
+	sf::Vector2f checkedTile = upperLeft;
+
+	int tileIndexX;
+	int tileIndexY;
+
+	while(checkedTile.x < upperRight.x)
+	{ 
+		checkedTile.x = fmin(checkedTile.x, upperRight.x);
+		tileIndexX = getTileIndexS(checkedTile.x);
+		tileIndexY = getTileIndexS(checkedTile.y-1);
+		if (this->isCeiling(tileIndexX, tileIndexY))
+		{
+			*ceilingY = getTilePosS(tileIndexY+1);
+			return true;
+		}
+		checkedTile.x += TILESIZE;
+	}
+
+	return false;
+}
+
 bool Map::hasGround(sf::Vector2f bottomLeft, sf::Vector2f bottomRight, float* groundY)
 {
 	sf::Vector2f checkedTile = bottomLeft;
@@ -136,7 +211,7 @@ bool Map::hasGround(sf::Vector2f bottomLeft, sf::Vector2f bottomRight, float* gr
 	{
 		checkedTile.x = fmin(checkedTile.x, bottomRight.x);
 		tileIndexX = getTileIndexS(checkedTile.x);
-		tileIndexY = getTileIndexS(checkedTile.y);
+		tileIndexY = getTileIndexS(checkedTile.y+1);
 		if (this->isGround(tileIndexX, tileIndexY))
 		{
 			*groundY = getTilePosS(tileIndexY);

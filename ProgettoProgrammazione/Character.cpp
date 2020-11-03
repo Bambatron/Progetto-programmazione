@@ -93,20 +93,16 @@ void Character::updateCharacter(float elapsedTime, Map& map)
 			speed.y += 98.1*elapsedTime;
 		if (isPressed(KeyInput::goRight))
 		{
-			if (_pushedRWall)
-			{
+			if (_pushRWall)
 				speed.x = 0;
-				currentState = CharacterState::standing;
-			}
 			else
 				speed.x = wSpeed;
 		}
 		else if (isPressed(KeyInput::goLeft))
 		{
-			if (_pushedLWall)
+			if (_pushLWall)
 			{
 				speed.x = 0;
-				currentState = CharacterState::standing;
 			}
 			else
 				speed.x = -wSpeed;
@@ -120,8 +116,14 @@ void Character::updateCharacter(float elapsedTime, Map& map)
 	
 	//update obj flags
 	updatePhysics(elapsedTime, map);
-	if (_onGround)
+	if (_onGround
+		||_atCeiling
+		||_pushLWall
+		||_pushRWall)
+	{
+		std::cout << _onGround << " " << _atCeiling << " " << _pushLWall << " " << _pushRWall << "\n";
 		sprite.setPosition(sf::Vector2f(pos.x, pos.y));
+	}
 	//Update the inputs received from game
 	updateInputs(); // Prev inpts are used for sounds and animations
 }

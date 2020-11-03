@@ -78,6 +78,7 @@ int main() {
 			//Draw background
 			if (showTileMap)
 			{
+				tileMap.setSize(sf::Vector2f(TILESIZE, TILESIZE));
 				for (unsigned int y = 0; y < HEIGHT; y++)
 				{
 					for (unsigned int x = 0; x < WIDTH; x++)
@@ -91,6 +92,10 @@ int main() {
 						window.draw(tileMap);
 					}
 				}
+				tileMap.setSize(player.getSprite().getSize());
+				tileMap.setPosition(player.getPos());
+				tileMap.setFillColor(sf::Color::Red);
+				window.draw(tileMap);
 			}
 			else
 			{
