@@ -122,7 +122,6 @@ void Character::updateCharacter(float elapsedTime, Map& map)
 		||_pushLWall
 		||_pushRWall)
 	{
-		std::cout << _onGround << " " << _atCeiling << " " << _pushLWall << " " << _pushRWall << "\n";
 		sprite.setPosition(sf::Vector2f(pos.x, pos.y));
 	}
 	//Update the inputs received from game
