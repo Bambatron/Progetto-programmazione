@@ -11,7 +11,7 @@
 #include "Destroyable.h"
 
 #define TILESIZE	25	//Every tile is a 25x25 square
-#define WIDTH		32	//Tiles on x axis
+#define WIDTH		96	//Tiles on x axis
 #define HEIGHT		24	//Tiles on y axis
 #define TILECOUNT	768//Number of tiles in the map
 
@@ -27,11 +27,11 @@ class Map
 	//Attributes
 public:
 	//Tile map
-	TileType tiles[32][24];
+	TileType tiles[WIDTH][HEIGHT];
 private:
 	//Background
-	sf::Texture* backImage;
-	sf::RectangleShape background;
+	std::map <int, sf::Texture> backImages;
+	std::map <int,sf::RectangleShape> backgrounds;
 
 	//Platforms
 	std::map <int, Platform> platforms;

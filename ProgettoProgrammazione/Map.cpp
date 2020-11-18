@@ -286,7 +286,10 @@ void Map::update(float elapsedTime)
 
 void Map::draw(sf::RenderWindow& window)
 {
-	window.draw(background);
+	for (unsigned int i = 0; i < backgrounds.size(); i++)
+	{
+		window.draw(backgrounds.at(i));
+	}
 	for (unsigned int i = 0; i < platforms.size(); i++)
 	{
 		window.draw(platforms.at(i).getBody());
@@ -303,64 +306,90 @@ void Map::draw(sf::RenderWindow& window)
 
 void Map::loadBackground(std::string line)
 {
-	backImage = new sf::Texture();
-	backImage->loadFromFile(line);
-	background = *(new sf::RectangleShape(sf::Vector2f(800, 600)));
-	background.setTexture(backImage);
+	//Extract Texture ID from line
+	std::string imgName;
+	size_t pos = line.find("|");	//Search "|" that indicate that what follows is an attribute
+	line = line.substr(pos + 1);	//Subtract from line the pointer
+	pos = line.find("|");			//Find where the current number ends
+	imgName = line.substr(0, pos);	//Copy only the number in tmp
+	line = line.substr(pos);		//Eliminate from line the nmber maintaining the next pointer to number
+	
+	//Create the texture
+	backImages.insert({ backImages.size(), sf::Texture() });
+	backImages.at(backImages.size() - 1).loadFromFile(imgName);
+	
+	//Extract data from the line
+	std::string tmp;
+	float values[4]; //This work only because I aready now how many number there are on that line
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		size_t pos = line.find("|");	////Search "|" that indicate that what follows is an attribute
+		line = line.substr(pos + 1);	//Subtract from line the pointer
+		pos = line.find("|");			//Find where the current number ends
+		tmp = line.substr(0, pos);		//Copy only the number in tmp
+		line = line.substr(pos);		//Eliminate from line the number maintaining the next pointer to number
+		values[i] = stof(tmp);			//Convert the number to float
+	}
+	
+	//Create background
+	backgrounds.insert({ backgrounds.size(), sf::RectangleShape(sf::Vector2f(values[2],values[3])) });
+	backgrounds.at(backgrounds.size() - 1).setPosition(values[0], values[1]);
+	backgrounds.at(backgrounds.size() - 1).setTexture(&backImages.at(backImages.size() - 1));	//Bind a texture to the background
 }
 
 void Map::generatePlatform(std::string line)
 {
+	//Extract data from the line
 	std::string tmp;
-
-	float values[4]; //This function only because I aready now how many number there will be on that line
-	//Search "|" that indicate that what follows is a number
+	float values[4]; //This worl only because I aready now how many number there are on that line
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		size_t pos = line.find("|");
-		line = line.substr(pos + 1); //Subtract from line the pointer
-		pos = line.find("|");
-		tmp = line.substr(0, pos);	//Copy only the number in tmp
-		line = line.substr(pos);	//Eliminate from line the nmber maintaining the next pointer to number
-		values[i] = stof(tmp);	//Convert the number to float
+		size_t pos = line.find("|");	//Search "|" that indicate that what follows is an attribute
+		line = line.substr(pos + 1);	//Subtract from line the pointer
+		pos = line.find("|");			//Find where the current number ends
+		tmp = line.substr(0, pos);		//Copy only the number in tmp
+		line = line.substr(pos);		//Eliminate from line the nmber maintaining the next pointer to number
+		values[i] = stof(tmp);			//Convert the number to float
 	}
+
+	//Create platform
 	this->platforms.insert({ platforms.size(), Platform::Platform(values[0], values[1], values[2], values[3]) });
 }
 
 void Map::generateMovingPlatform(std::string line)
 {
+	//Extract data from the line
 	std::string tmp;
-
-	float values[7]; //This function only because I aready now how many number there will be on that line
-
-	//Search "|" that indicate that what follows is a number
+	float values[7]; //This work only because I aready now how many number there are on that line
 	for (unsigned int i = 0; i < 7; i++)
 	{
-		size_t pos = line.find("|");
-		line = line.substr(pos + 1); //Subtract from line the pointer
-		pos = line.find("|");
-		tmp = line.substr(0, pos);	//Copy only the number in tmp
-		line = line.substr(pos);	//Eliminate from line the nmber maintaining the next pointer to number
-		values[i] = stof(tmp);	//Convert the number to float
+		size_t pos = line.find("|");	//Search "|" that indicate that what follows is an attribute
+		line = line.substr(pos + 1);	//Subtract from line the pointer
+		pos = line.find("|");			//Find where the current number ends
+		tmp = line.substr(0, pos);		//Copy only the number in tmp
+		line = line.substr(pos);		//Eliminate from line the number maintaining the next pointer to number
+		values[i] = stof(tmp);			//Convert the number to float
 	}
+
+	//Create the moving platform
 	this->movingPlatforms.insert({ movingPlatforms.size(), MovingPlatform::MovingPlatform(values[0], values[1], values[4], values[5], values[2], values[3], true, values[6])});
 }
 
 void Map::generateDestroyable(std::string line)
 {
+	//Extract data from the line
 	std::string tmp;
-
-	float values[6]; //This function only because I aready now how many number there will be on that line
-
-	//Search "|" that indicate that what follows is a number
+	float values[6]; //This work only because I aready now how many number there are on that line
 	for (unsigned int i = 0; i < 6; i++)
 	{
-		size_t pos = line.find("|");
-		line = line.substr(pos + 1); //Subtract from line the pointer
-		pos = line.find("|");
-		tmp = line.substr(0, pos);	//Copy only the number in tmp
-		line = line.substr(pos);	//Eliminate from line the nmber maintaining the next pointer to number
-		values[i] = stof(tmp);	//Convert the number to float
+		size_t pos = line.find("|");	//Search "|" that indicate that what follows is an attribute
+		line = line.substr(pos + 1);	//Subtract from line the pointer
+		pos = line.find("|");			//Find where the current number ends
+		tmp = line.substr(0, pos);		//Copy only the number in tmp
+		line = line.substr(pos);		//Eliminate from line the number maintaining the next pointer to number
+		values[i] = stof(tmp);			//Convert the number to float
 	}
+
+	//Create the destroyable
 	this->destroyable.insert({ destroyable.size(), Destroyable::Destroyable(values[0], values[1], values[2], values[3], true, values[4], values[5]) });
 }

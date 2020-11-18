@@ -11,16 +11,17 @@
 int main() {
 	//Setting up
 	sf::RenderWindow window(sf::VideoMode(800, 600), "camera");
-	
+	sf::View camera (sf::FloatRect(0, 0, 800, 600));
+	window.setView(camera);
 	sf::RectangleShape tileMap(sf::Vector2f(TILESIZE, TILESIZE));
 	bool showTileMap = false;
-
-	sf::Clock clock;
-	sf::Time deltaTime = sf::Time::Zero;
-	sf::Time timePerFrame = sf::seconds(1.f/60.f);
 	
 	Map map;
 	
+	sf::Clock clock;
+	sf::Time deltaTime = sf::Time::Zero;
+	sf::Time timePerFrame = sf::seconds(1.f / 144.f);
+
 	//Player
 	PlayerProva player;
 
@@ -32,7 +33,6 @@ int main() {
 		sf::Event event;
 		if (deltaTime > timePerFrame)
 		{
-			deltaTime -= timePerFrame;
 			while (window.pollEvent(event))
 			{
 				// Request for closing the window
@@ -72,9 +72,24 @@ int main() {
 
 			map.update(timePerFrame.asSeconds());
 
-			// Clear the whole window before rendering a new frame
-			window.clear();
+			//Move camera
+			if (player.getSpeed().x > 0 &&
+				(player.getPos().x > 750)&&(camera.getCenter().x <= 2000))
+				camera.move(player.getSpeed().x * deltaTime.asSeconds(), 0.f);
+			if (player.getSpeed().x < 0 &&
+				(player.getPos().x < 1650) &&(camera.getCenter().x >= 400))
+					camera.move(player.getSpeed().x * deltaTime.asSeconds(), 0.f);
+			
+			//Reset view if out of boundaries
+			if (camera.getCenter().x > 2000)
+				camera.setCenter(2000, 300);
+			if (camera.getCenter().x < 400)
+				camera.setCenter(400, 300);
+			//Render
+			window.clear();	// Clear the whole window before rendering a new frame
 	
+			window.setView(camera);	//Reset the view
+
 			//Draw background
 			if (showTileMap)
 			{
@@ -102,8 +117,9 @@ int main() {
 				map.draw(window);
 				player.draw(window);
 			}
-			// End the current frame and display its contents on screen
-			window.display();
+			window.display();// End the current frame and display its contents on screen
+
+			deltaTime -= timePerFrame;
 		}
 	}
 	return 0;

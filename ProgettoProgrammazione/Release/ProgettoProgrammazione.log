@@ -1,4 +1,4 @@
-﻿  Character.cpp
+﻿  main.cpp
 c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
           with
           [
@@ -6,46 +6,9 @@ c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\m
           ]
 c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
 c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\character.cpp(93): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  MovingObject.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  Player.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  PlayerProva.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  main.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
-          with
-          [
-              T=int
-          ]
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\main.cpp(91): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\main.cpp(106): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
   Generating code
-  0 of 679 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  14 of 858 functions ( 1.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

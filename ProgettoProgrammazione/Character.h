@@ -30,7 +30,7 @@ class Character : public Drawable, public MovingObject
 public:
 	bool inputs[5]; //inputs[i] = true if corresponding KeyInput is pressed
 	bool prevInputs[5];
-
+	bool hasMoved;
 protected:
 	unsigned int hp;
 	bool facingRight;	// 1=facing right, 0=facing left

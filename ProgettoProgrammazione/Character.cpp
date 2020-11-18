@@ -15,13 +15,14 @@ Character::Character(unsigned int hp, bool facR, float wS, float jS, float posX,
 
 	this->currentState = CharacterState::standing;
 	this->_onGround = true;
-
+	this->hasMoved = false;
 	for(unsigned int i = 0; i < 5; i++)
 		this->inputs[i] = false;
 }
 
 void Character::updateCharacter(float elapsedTime, Map& map)
 {
+	hasMoved = false;
 	switch (currentState)
 	{
 	case CharacterState::standing:
@@ -140,6 +141,7 @@ void Character::move(float elapsedTime)
 {
 	MovingObject::move(speed*elapsedTime);
 	sprite.move(speed*elapsedTime);
+	hasMoved = true;
 }
 
 void Character::draw(sf::RenderWindow & window)
