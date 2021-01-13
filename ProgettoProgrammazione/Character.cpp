@@ -1,149 +1,133 @@
 #include "Character.h"
 
-Character::Character(unsigned int hp, bool facR, float wS, float jS, float posX, float posY, float cX, float cY, float hsX, float hsY)
+Character::Character()
 {
-	this->hp = hp;
-	this->facingRight = facR;
-	this->wSpeed = wS;
-	this->jSpeed = jS;
-	this->pos.x = posX;
-	this->pos.y = posY;
-	this->collisionBox.center.x = cX;
-	this->collisionBox.center.y = cY;
-	this->collisionBox.halfsize.x = hsX;
-	this->collisionBox.halfsize.y = hsY;
-
-	this->currentState = CharacterState::standing;
-	this->_onGround = true;
-	this->hasMoved = false;
-	for(unsigned int i = 0; i < 5; i++)
+	for (unsigned int i = 0; i < NINPUTS; i++)
+	{
 		this->inputs[i] = false;
+	}
+
+	facingRight = true;
 }
 
-void Character::updateCharacter(float elapsedTime, Map& map)
+void Character::resetInputs()
 {
-	hasMoved = false;
+	for (unsigned int i = 0; i < NINPUTS; i++)
+	{
+		inputs[i] = false;
+	}
+}
+
+void Character::update(float deltaTime)
+{
+	moved = false;
+	collided = false;
+
+	updateCharacter();
+	
+	if (physical)
+		updatePhysics(deltaTime);
+	
+	move(speed*deltaTime);
+
+	for (unsigned int  i = 0; i < NINPUTS; i++)
+	{
+		inputs[i] = false;
+	}
+}
+
+void Character::updateCharacter()
+{
 	switch (currentState)
 	{
-	case CharacterState::standing:
-		speed.x = 0;
-		if (!_onGround)
+	case standing:
+		//To walking
+		if (inputs[goRight] != inputs[goLeft])
 		{
-			currentState = CharacterState::jumping;
-			break;
+			currentState = walking;
+			if (inputs[goRight] && !pushRightWall)
+				speed.x = maxSpeed.x;
+			else if (!pushLeftWall)
+				speed.x = -maxSpeed.x;
 		}
-		if (isPressed(KeyInput::goRight) != isPressed(KeyInput::goLeft))
+		else
 		{
-			if (isPressed(KeyInput::goRight))
-				speed.x = wSpeed;
-			else if (isPressed(KeyInput::goLeft))
-				speed.x = -wSpeed;
-			currentState = CharacterState::walking;
-			break;
+			speed.x = 0.0f;
 		}
-		if (isPressed(KeyInput::jump))
+		//To jumping
+		if (!onGround)
+			currentState = jumping;
+		else if (inputs[jump])
 		{
-			currentState = CharacterState::jumping;
-			speed.y += jSpeed;
+			currentState = jumping;
+			speed.y = -maxSpeed.y;
 		}
+		//Shoot or use ability (shooting has priority over ability by design)
+		if (inputs[KeyInput::shoot])
+			shoot();
+		else if (inputs[use])
+			ability();
 		break;
-	case CharacterState::walking:
-		if (isPressed(KeyInput::goRight) == isPressed(KeyInput::goLeft))
+
+	case walking:
+		//To standing
+		if ((pushLeftWall && speed.x < 0)
+			||(pushRightWall && speed.x > 0)
+			|| inputs[goRight] == inputs[goLeft])
 		{
+			currentState = standing;
 			speed.x = 0;
-			currentState = CharacterState::standing;
 		}
-		else if (isPressed(KeyInput::goRight))
+		//To jumping
+		if (!onGround)
+			currentState = jumping;
+		else if (inputs[jump])
 		{
-			if (_pushedRWall)
-			{
-				speed.x = 0;
-				currentState = CharacterState::standing;
-			}
-			else
-				speed.x = wSpeed;
+			currentState = jumping;
+			speed.y = -maxSpeed.y;
 		}
-		else if (isPressed(KeyInput::goLeft))
+		//Shoot or use ability (shooting has priority over ability by design)
+		if (inputs[KeyInput::shoot])
+			shoot();
+		else if (inputs[use])
 		{
-			if (_pushedLWall)
-			{
-				speed.x = 0;
-				currentState = CharacterState::standing;
-			}
-			else
-				speed.x = -wSpeed;
-		}
-		if (isPressed(KeyInput::jump))
-		{
-			currentState = CharacterState::jumping;
-			speed.y += jSpeed;
-		}
-		if (!_onGround)
-		{
-			currentState = CharacterState::jumping;
-			break;
+			ability();
+			currentState = standing;
 		}
 		break;
-	case CharacterState::jumping:
-		if (_onGround)
+	case jumping:
+		//Check if bonks head
+		if (atCeiling  && speed.y < 0)
+			speed.y = 0;
+		//To standing	
+		if (onGround && speed.y > 0)
 		{
 			speed.y = 0;
 			currentState = standing;
 		}
-		else if (speed.y < 600)
-			speed.y += 98.1*elapsedTime;
-		if (isPressed(KeyInput::goRight))
+		//Countinue x-axis movement
+		if (inputs[goRight] != inputs[goLeft])
 		{
-			if (_pushRWall)
-				speed.x = 0;
-			else
-				speed.x = wSpeed;
+			if (inputs[goRight] && !pushRightWall)
+				speed.x = maxSpeed.x;
+			else if (!pushLeftWall)
+				speed.x = -maxSpeed.x;
 		}
-		else if (isPressed(KeyInput::goLeft))
+		else
 		{
-			if (_pushLWall)
-			{
-				speed.x = 0;
-			}
-			else
-				speed.x = -wSpeed;
+			speed.x = 0.0f;
 		}
 		break;
-	case CharacterState::shooting:
-		break;
-	}
-	
-	Character::move(elapsedTime);
-	
-	//update obj flags
-	updatePhysics(elapsedTime, map);
-	if (_onGround
-		||_atCeiling
-		||_pushLWall
-		||_pushRWall)
-	{
-		sprite.setPosition(sf::Vector2f(pos.x, pos.y));
-	}
-	//Update the inputs received from game
-	updateInputs(); // Prev inpts are used for sounds and animations
-}
-
-void Character::updateInputs()
-{
-	for (unsigned int i = 0; i < 5; i++)
-	{
-		prevInputs[i] = inputs[i];
 	}
 }
 
-void Character::move(float elapsedTime)
+void Character::shoot()
 {
-	MovingObject::move(speed*elapsedTime);
-	sprite.move(speed*elapsedTime);
-	hasMoved = true;
+	std::cout << "Character::shoot()\n";
 }
 
-void Character::draw(sf::RenderWindow & window)
+void Character::ability()
 {
-	window.draw(sprite);
+	std::cout << "Character::ability()\n";
 }
+

@@ -1,31 +1,80 @@
-﻿  Map.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+﻿  Game.cpp
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(51): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(52): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(53): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(54): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(55): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(56): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\entity.h(57): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\camera.h(20): warning C4244: 'argument': conversion from 'const T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\camera.h(28): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=int
           ]
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(72): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(74): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(84): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(86): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(96): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(98): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(266): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(268): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(278): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(280): warning C4018: '<': signed/unsigned mismatch
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(327): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(346): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.cpp(365): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  MovingObject.cpp
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\camera.h(32): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=int
           ]
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(49): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\bamba\documents\github\progetto-programmazione\progettoprogrammazione\map.h(51): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+          and
+          [
+              T=float
+          ]
   ProgettoProgrammazione.vcxproj -> C:\Users\Bamba\Documents\GitHub\Progetto-programmazione\Debug\ProgettoProgrammazione.exe

@@ -1,33 +1,40 @@
-#include <iostream>
+#pragma once
 
-#include "Platform.h"
+#include "Entity.h"
 
-class MovingPlatform: public Platform
+//Platform capable of moving, on track or free roam , but not affected by physics
+
+class MovingPlatform: public Entity
 {
 	//Attributes
-private:
-	sf::Vector2f originalPosition;	//Original position of the platform
-	sf::Vector2f finalPosition;	//Final position of the platform
-	bool moving; //1 if the platform is moving
+protected:
+	int posInMap;
+	sf::Vector2i startingPosition;	//Original position of the platform
+	sf::Vector2i finalPosition;	//Final position of the platform
 	sf::Vector2i direction;
-	float speed;
-	
+	bool onTrack;
+	bool moving;
 
 	//Methods
 public:
-	MovingPlatform(int originalPositionX, int originalPositionY, int finalPositionX, int finalPositionY, float width = 50.f, float height = 25.f, bool moving = 1, float speed = 60.f);
-
+	MovingPlatform();
+	MovingPlatform(int id, float width = 0.0f, float height = 0.0f, int sPosX = 0, int sPosY = 0, int fPosX = 0, int fPosY = 0, float speedX = 0.0f, float speedY = 0.0f, int textID = 0);
+	//Getters
+	int getPosInMap() { return posInMap; }
+	sf::Vector2i getStartingPosition() { return startingPosition; }
+	sf::Vector2i getFinalPos() { return finalPosition; }
+	sf::Vector2i getDirection() { return direction; }
+	bool isOnTrack() { return onTrack; }
 	bool isMoving() { return moving; }
-	void setMoving(bool start) { moving = start; } //1 if the platform start moving
-
-	sf::Vector2f getOriginalPosition() { return originalPosition; }
-	sf::Vector2f getFinalPos() { return finalPosition; }
-
-	void move(float elapsedTime);
-	 
-private:
+	//Setters
+	void setStartingPosition(sf::Vector2i startPos) { startingPosition = startPos; }
+	void setFinalPosition(sf::Vector2i finPos) { finalPosition = finPos; }
+	void setOnTrack(bool track) { onTrack = track; }
+	void setMoving(bool mov) { moving = mov; }
+	//Updates
+	virtual void update(float deltaTime);
+protected:
 	void searchDirection();
 	bool isNearX();
 	bool isNearY();
-
 };

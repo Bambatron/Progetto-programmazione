@@ -1,10 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
 
-//This class is an interface for SFML resources
+//This class is an interface for SFML resources for objects that have to be rendered on screen
 
 class Drawable
 {
@@ -16,7 +14,12 @@ protected:
 
 //Methods
 public:
-	sf::RectangleShape getSprite() { return sprite; }
+	Drawable();
+	//Getters
+	void render(sf::RenderWindow window) { window.draw(sprite); }
+	sf::RectangleShape draw() { return sprite; }
+	unsigned int getTextureID() { return textureID; }
+
 protected:
 	void initTexture();
 	void initSprite(float scale);

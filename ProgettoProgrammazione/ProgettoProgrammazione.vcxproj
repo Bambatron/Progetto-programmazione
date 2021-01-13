@@ -133,30 +133,36 @@
   <ItemGroup>
     <ClCompile Include="Alien.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CollisionData.cpp" />
     <ClCompile Include="Destroyable.cpp" />
     <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="PhysicObject.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerProva.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alien.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="CollisionData.h" />
     <ClInclude Include="Destroyable.h" />
     <ClInclude Include="Drawable.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="MovingObject.h" />
     <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="PhysicObject.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerProva.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

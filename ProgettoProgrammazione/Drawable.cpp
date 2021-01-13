@@ -1,5 +1,9 @@
 #include "Drawable.h"
 
+Drawable::Drawable(): sprite()
+{
+}
+
 void Drawable::initTexture()
 {}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include<iostream>
+#include <SFML/Window/Event.hpp>
 
 #include "Character.h"
 
@@ -13,8 +13,14 @@ private:
 public:
 	Player();
 	~Player();
-
+	//Getters
+	unsigned int getScore() { return score; }
+	//Setters
 	void setScore(unsigned int score) { this->score = score; }
 	void addScore(unsigned int score) { this->score += score; }
-	unsigned int getScore() { return score; }
+	//Transformers
+	//Updates
+	bool processInput(sf::Event input);
+	virtual void shoot();
+	virtual void ability();
 };

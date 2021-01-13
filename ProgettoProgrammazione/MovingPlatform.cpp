@@ -1,92 +1,118 @@
 #include "MovingPlatform.h"
 
-MovingPlatform::MovingPlatform(int originalPositionX, int originalPositionY, int finalPositionX, int finalPositionY, float width, float height, bool moving, float speed)
+MovingPlatform::MovingPlatform()
 {
-	this->originalPosition = sf::Vector2f(originalPositionX, originalPositionY);
-	body.setPosition(originalPosition);
-	body.setSize(sf::Vector2f(width, height));
-
-	this->moving = moving;
-	this->speed = speed;
-	this->finalPosition = sf::Vector2f(finalPositionX, finalPositionY);
-	searchDirection();
-	body.setFillColor(sf::Color::Magenta);
 }
 
-void MovingPlatform::move(float elapsedTime)
+MovingPlatform::MovingPlatform(int id, float width, float height, int sPosX, int sPosY, int fPosX, int fPosY, float speedX, float speedY, int textID)
 {
-	float oldPosX;
-	float oldPosY;
-	if (isNearX())
-		direction.x = 0;
-	if (isNearY())
-		this->direction.y = 0;
+	startingPosition = sf::Vector2i(sPosX, sPosY);
+	finalPosition = sf::Vector2i(fPosX, fPosY);
+	moving = true;
 
-	if ((direction.x == 0) && (direction.y == 0))
-	{
-		sf::Vector2f tmp = finalPosition;
-		finalPosition = originalPosition;
-		originalPosition = tmp;
+	if (fPosX < 0 || fPosY < 0)
+		onTrack = false;
+	else
+		onTrack = true;
+
+	type = EntityType::movingPlatform;
+
+	hitBox.left = sPosX;
+	hitBox.top = sPosY;
+	hitBox.width = width;
+	hitBox.height = height;
+	maxSpeed = sf::Vector2f(speedX, speedY);
+	
+	if (onTrack)
 		searchDirection();
+	else
+		speed = sf::Vector2f(0.0f, 0.0f);
+
+	lastMovement = sf::Vector2f(0.0f, 0.0f);
+	physical = false;
+	kinematic = false;
+	onGround = false;
+	pushLeftWall = false;
+	pushRightWall = false;
+	atCeiling = false;
+	moved = false;
+	collided = false;
+
+	sprite.setPosition(sPosX, sPosY);
+	sprite.setSize(sf::Vector2f(width, height));
+	sprite.setOutlineColor(sf::Color::Black);
+	sprite.setOutlineThickness(1.0f);
+	textureID = textID;
+	if (textID == 0)
+		sprite.setFillColor(sf::Color::Magenta);
+}
+
+void MovingPlatform::update(float deltaTime)
+{
+	moved = false;
+	collided = false;
+
+	if (onTrack)
+	{
+		if (isNearX())
+			speed.x = 0;
+		if (isNearY())
+			speed.y = 0;
+
+		if ((speed.x == 0) && (speed.y == 0))
+		{
+			//Swap startingPosition and finalPosition
+			sf::Vector2i tmp = finalPosition;
+			finalPosition = startingPosition;
+			startingPosition = tmp;
+
+			searchDirection();
+		}
 	}
-	oldPosX = body.getPosition().x;
-	oldPosY = body.getPosition().y;
-	body.move(elapsedTime*speed*direction.x, elapsedTime*speed*direction.y);
+
+	if (physical)
+		updatePhysics(deltaTime);
+
+	move(speed*deltaTime);
 }
 
 void MovingPlatform::searchDirection()
 {
 	//Searh on X 
-	if (originalPosition.x < finalPosition.x)
-		direction.x = 1;
-	else if (originalPosition.x > finalPosition.x)
-		direction.x = -1;
-	else if (originalPosition.x == finalPosition.x)
-		direction.x = 0;
+	if (startingPosition.x < finalPosition.x)
+		speed.x = maxSpeed.x;
+	else if (startingPosition.x > finalPosition.x)
+		speed.x = -maxSpeed.x;
+	else if (startingPosition.x == finalPosition.x)
+		speed.x = 0;
 
 	//search on Y
-	if (originalPosition.y < finalPosition.y)
-		direction.y = 1;
-	else if (originalPosition.y > finalPosition.y)
-		direction.y = -1;
-	else if (originalPosition.y == finalPosition.y)
-		direction.y = 0;
+	if (startingPosition.y < finalPosition.y)
+		speed.y = maxSpeed.y;
+	else if (startingPosition.y > finalPosition.y)
+		speed.y = -maxSpeed.y;
+	else if (startingPosition.y == finalPosition.y)
+		speed.y = 0;
 }
 
 bool MovingPlatform::isNearX()
 {
-	bool result;
-	float offset;
-	float error = 5.f;
+	float distance = fabs(finalPosition.x - hitBox.left);
+	float error = 5.0f;
 
-	if (finalPosition.x > body.getPosition().x)
-		offset = finalPosition.x - body.getPosition().x;
-	else
-		offset = body.getPosition().x - finalPosition.x;
-
-	if (offset <= error)
-		result = true;
-	else
-		result = false;
-
-	return result;
+	if (distance <= error)
+		return true;
+	
+	return false;
 }
 
 bool MovingPlatform::isNearY()
 {
-	bool result;
-	float offset;
-	float error = 5.f;
-	
-	if (finalPosition.y > body.getPosition().y)
-		offset = finalPosition.y - body.getPosition().y;
-	else
-		offset = body.getPosition().y - finalPosition.y;
+	float distance = fabs(finalPosition.y - hitBox.top);
+	float error = 5.0f;
 
-	if (offset < error)
-		result = true;
-	else
-		result = false;
+	if (distance <= error)
+		return true;
 
-	return result;
+	return false;
 }

@@ -1,77 +1,58 @@
 #pragma once
 
+#include <list>
 #include <map>
 #include <fstream>
 #include <iostream>
-
-#include <SFML/Graphics.hpp>
 
 #include "Platform.h"
 #include "MovingPlatform.h"
 #include "Destroyable.h"
 
-#define TILESIZE	25	//Every tile is a 25x25 square
-#define WIDTH		96	//Tiles on x axis
-#define HEIGHT		24	//Tiles on y axis
-#define TILECOUNT	768//Number of tiles in the map
+#define MAPSTAT		3	//Number of values in a map stat line
+#define BACKSTAT	4	//Number of values in a Background desription
+#define PLATSTAT	5	//Number of values in a Platform description
+#define MOVPLATSTAT	9	//Number of values in a MovingPlatform description
+#define DESTRSTAT	11	//Number of values in a Destroyable description
 
-enum TileType
+enum MapType : int
 {
-	empty = 0,	//Void tile
-	block = 1,	//Not-crossable platform
-	oneway = 2	//one way crossable platform, usually from over to below
+	menu = 0,
+	level = 1
 };
 
 class Map
 {
 	//Attributes
 public:
-	//Tile map
-	TileType tiles[WIDTH][HEIGHT];
-private:
-	//Background
-	std::map <int, sf::Texture> backImages;
-	std::map <int,sf::RectangleShape> backgrounds;
-
+	std::map <int, sf::RectangleShape> backgrounds;
 	//Platforms
 	std::map <int, Platform> platforms;
 	std::map <int, MovingPlatform> movingPlatforms;
-	std::map <int, Destroyable> destroyable;
-
+	std::map <int, Destroyable> destroyables;
+private:
+	sf::Vector2i pixelMapSize;
+	MapType type;
+	//Background
+	std::map <int, sf::Texture> backImages;
+	
 	//Methods
 public:
 	//Constructor
 	Map();
-	void loadTileMap();	//Load the tile map for the first time
-
 	//Getters
-	static sf::Vector2i getTileIndex(float x, float y) { return sf::Vector2i((x / TILESIZE), (y / TILESIZE)); }
-	static int getTileIndexS(float value) { return (value / TILESIZE); }
-	static sf::Vector2i getTilePos(int x, int y) { return sf::Vector2i((x * TILESIZE), (y * TILESIZE)); }
-	static float getTilePosS(int value) { return (value * TILESIZE); }
-	TileType getTile(int x, int y);
-	bool isObstacle(int x, int y);
-	bool isGround(int x, int y);
-	bool isCeiling(int x, int y);
-	bool hasLeftWall(sf::Vector2f leftUp, sf::Vector2f leftDown, float* wallX);
-	bool hasRightWall(sf::Vector2f rightUp, sf::Vector2f rightDown, float* wallX);
-	bool hasCeiling(sf::Vector2f upperLeft, sf::Vector2f upperRight, float* ceilingY);
-	bool hasGround(sf::Vector2f bottomLeft, sf::Vector2f bottomRight, float* groundY);
-	bool isOneWay(int x, int y);
-	bool isEmpty(int x, int y);
-
-	//Setters
-	void clearTile(float posX, float posY);	//PosX and posY as map positin and not as tile index
-	void setTile(float posX, float posY);	//PosX and posY as map positin and not as tile index
-	
+	sf::Vector2i getPixelMapSize() { return pixelMapSize; }
+	int getPixelMapWidth() { return pixelMapSize.x; }
+	int getPixelMapHeight() { return pixelMapSize.y; }
 	//Update
-	void update(float elapsedTime); //Move around the platforms that are intended to be moved
-	
+	void update(float deltaTime); //Move around the platforms that are intended to be moved
+
 	//Render
-	void draw(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window);
 
 private:
 	//Generations
+	void loadStat(std::string line);
 	void loadBackground(std::string line);
 	void generatePlatform(std::string line);
 	void generateMovingPlatform(std::string line);
