@@ -1,6 +1,9 @@
 #pragma once
 #include<iostream>
 #include <SFML/Graphics.hpp>
+#include "Alien.h"
+#include "Player.h"
+
 class Bullet
 	public Entity;
 {

@@ -1,45 +1,27 @@
 #include "Character.h"
 
-Character::Character(std::string name)
+Character::Character()
 {
-	this->movementSpeed = x,f;
+
 }
 
 Character::~Character()
 {
-}
-void Character::move(const float posX, const float posY);
-{
-	this->sprite.move(this->movementspeed*posX, this->movementspeed*posY);
 
-}
-void Character::updateStats()
-{
-	this->hp = this->hpTot;
-	this->damageMin = this->damageMin;
-	this->damageMax = this->damageMin * 2;
-	if (this->weapon)
-	{
-		this->damageMin += this->weapon->getDamageMin;
-		this->damageMin += this->weapon->getDamageMax;
-	}
-}
-
-Character::Character(std::string name, std::string bio)
-{
-	this->
-	this->x = 0;
-	this->y = 0;
-	this->name = name;
-	this->weapon = nullptr;
-	this->statPoints = x;
-	this->updateStats();
 }
 
 void Character::takeDamage()
 {
 	this->hp--;
 }
+
+void Character::returnHp()
+{
+	if ((this->hp = this->hp + x) > this->hp_max)
+		this->hp = this->hp_max;
+
+}
+
 void Character::setHp(int hp)
 {
 	this->hp = hp;
@@ -70,6 +52,7 @@ int Character::getSpeed()
 {
 	return
 		this->speed;
+ 
 void Character::setJumpHeight(int jump_height )
 {
 	this->jump_height = jump_height;
@@ -78,4 +61,21 @@ void Character::setJumpHeight(int jump_height )
 int Character::getJumpHeight()
 {
 	return
-		this->jumpheight;
+		this->jump_height;
+}
+
+int Character::getAmmo()
+{
+	return
+		this->ammo;
+}
+
+void Character::setAmmo(int n)
+{
+	this->ammo = n;
+}
+
+bool Character::isShooting()
+{
+	return shoot;
+}

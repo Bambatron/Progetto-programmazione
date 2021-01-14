@@ -1,31 +1,52 @@
 #pragma once
 #include <math.h>
+#include "Entity.h"
 
 class Character
 	public Entity;
 {
-private:
+
+public:
+
 	Character();
 	virtual ~Character();
 
-	//Functions
-	void move(const float posX, const float posY);
-	void setHp(int hp);
-	void setHpTot(int hp_tot);
-	void setSpeed(int speed);
-	void setJumpHeight(int jump_height);
+
 	void takeDamage();
+	void returnHp();//boost Heal
+
+	void setHp(int hp);
+	void setHpMax(int hp_max);
+	void setAmmo(int i);
+	void setRatio(const sf::Time& ratio);
 
 	int getHp();
-	int getHpTot();
-	int getSpeed();
-	float movementSpeed;
+	int getHpMax();
+	int getAmmo();
+	const sf::Time getRatio();
 
-	Weapon* weapon;
+	bool isShooting();
+
+	void loseHP(const int hp);
+	void gainHP(const int hp);
+
+	const bool isDead() const;
+
+	void updateStats(const bool reset);
+    void update();
 
 protected:
+	
+	sf::Time reload_clock;
+	sf::Time ratio_clock;
+
 	int hp;
-	int hp_tot;
-	int speed;
-}
+	int hp_max;
+
+	int ammo;
+	int ammo_max;
+
+	bool reloading = false;
+	bool shoot;
+};
 
